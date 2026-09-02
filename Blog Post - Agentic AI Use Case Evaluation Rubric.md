@@ -1,150 +1,142 @@
-# Beyond the Hype: A New Framework for Evaluating Agentic AI Use Cases
+# Scoring 17 Agentic AI Use Cases, and What Broke My First Rubric
 
-> "Everyone says customer support resolution is the obvious place to start with agentic AI. But that kept bugging me—why are some use cases actually succeeding while others fail spectacularly? How do we know which problems to actually apply agentic AI to, rather than just following the vendor playbook?"
-> 
-> — Analysis Author
+Every "Top 10 Agentic AI Use Cases" article says the same thing. Customer support first, then sales development, IT service desk, HR recruiting. I've read a lot of these. They're not wrong, exactly, but they all read like they were assembled from the same press releases, and none of them tell you *why* those use cases belong at the top.
 
-The agentic AI space is drowning in listicles. Every week brings another "Top 10 Use Cases for AI Agents" article, and they all look the same: customer support, sales development, IT service desk, HR recruiting. Yet in practice, implementations vary wildly in their success rates. Some organizations deploy agents that deliver ROI within months; others spend millions on pilot projects that never scale.
+That bugged me. Some agent deployments work and some burn a year of engineering time and never leave pilot, and "customer support is a good use case" doesn't help you predict which is which. So I decided to stop reading lists and build a scoring rubric instead.
 
-This disconnect between what the internet consensus recommends and what actually works at scale suggests we need a better framework for evaluating agentic AI use cases. Here's what emerged from analyzing 17 major use cases across two fundamentally different weighting approaches.
+My objective was simple: come up with a set of attributes that actually predict whether an agent will succeed at a task, score the commonly cited use cases against them, and see whether the ranking that falls out matches the internet consensus.
 
-## The Methodology: Three Passes, Two Philosophies
+It didn't. That turned out to be the interesting part.
 
-The evaluation started with two competing hypotheses about what makes an agentic AI use case successful:
+## The setup
 
-**Pass 1: Operational Efficiency** prioritized simplicity, volume, and verifiability—essentially asking: "What high-volume, repetitive business process can we automate?"
+Here's the parts list:
 
-**Pass 3: Cognitive Complexity** prioritized sophistication, tool integration, and iterative learning—essentially asking: "What intellectually demanding problem can we augment human expertise with?"
+- The 20 most-cited agentic AI use cases, pulled from the usual roundups. I carried 17 forward that were distinct enough to score separately.
+- A list of about 20 attributes that describe what makes a task agent-friendly. Things like: the task is repeatable, the solution set is constrained, input data is high-volume and structured, the agent can verify its own results, the agent can escalate to a human.
+- A three-point scale. **True (1)** if the use case clearly has the attribute, **Somewhat (0)** if it's mixed, **False (-1)** if it doesn't.
+- A weight per attribute, because these obviously don't matter equally.
 
-These aren't mutually exclusive. They represent two different business imperatives. Most organizations pursuing quick cost reductions follow Pass 1 logic. Organizations seeking competitive moats and specialized capabilities follow Pass 3 logic.
+Multiply, add up the row, sort the column. That's the whole method. It fits in a spreadsheet and takes an afternoon.
 
-## Building the Rubric: 17 Attributes, 5 Tiers, 1-6x Multipliers
+For the first weighting I put the ×3 multiplier on the things I assumed mattered most for automation: high-volume structured input, repeatability, verifiable results, speed as a priority, and a stable environment the agent can navigate on its own. Bounded process and clear rules got ×2. The supporting stuff, memory management, log review, human escalation, got ×1.
 
-The evaluation framework emerged from systematic observation and hands-on experience implementing agentic AI across multiple domains. After analyzing dozens of real-world deployments, patterns emerged: certain characteristics reliably predicted success or failure, while others varied by use case type.
+Then I scored everything.
 
-This led to identifying **17 core attributes** that define agentic AI readiness. These weren't arbitrary—each reflects a real implementation challenge or capability requirement observed in the field.
+## Pass 1 and 2: the answer I expected
 
-Recognizing that not all attributes carry equal weight, these 17 were grouped into **5 strategic tiers**, each with its own multiplier:
+The weighted results came out about where the listicles said they would:
 
-### Tier 1: Cognitive Complexity & Problem-Solving (×6)
-**Strategic attributes that define capacity for complex technical tasks**
-- Agent can decompose complex, ambiguous problems into sub-tasks
-- Solution space is unbounded and requires creative exploration
-- Agent can learn and improve through iterative cycles and testing feedback
-- Multiple valid solution paths exist; agent can evaluate trade-offs
+| Use case | Score |
+| --- | --- |
+| Customer support resolution | 29 |
+| Finance operations: invoices, AP, close | 28 |
+| IT service desk and incident response | 27 |
+| Sales development and lead qualification | 21 |
+| HR service desk and recruiting | 17 |
+| Marketing campaign optimization | 17 |
 
-### Tier 2: Tool Integration & Coordination (×5)
-**Attributes that enable agents to work with external systems and coordinate**
-- Agent can integrate with multiple tools, APIs, and external systems
-- Agent can coordinate effectively with sub-agents with strong goal alignment
-- Agent can manage state and context across extended multi-turn interactions
-- Results are reviewable and testable through automated logs and test suites
+Customer support on top. AP invoice matching and IT service desk right behind it. If you'd shown me this table without the rest of the analysis I would have nodded and moved on. It agrees with the consensus, and it agrees with my own intuition about which projects ship.
 
-### Tier 3: Execution Excellence (×3)
-**Attributes for operational efficiency and reliability**
-- Use case is highly repeatable (commonly recurring patterns)
-- Agent can verify/validate its own results (at least partially)
-- Fast feedback loops between input and output enable quick iteration
+Then I looked at the bottom of the same table.
 
-### Tier 4: Process Clarity (×2)
-**Attributes that simplify implementation**
-- Clear resolution paths exist (even if many possible endpoints)
-- Bounded business rules and policies that guide decisions
-- Solution can be constrained by existing domain knowledge
+Software engineering agents scored **1**. Twelfth out of seventeen, in a three-way tie with supply chain rerouting and predictive maintenance, against 29 for customer support.
 
-### Tier 5: Support & Safety (×1)
-**Attributes that provide guardrails and fallbacks**
-- Operator can manage agent memory and context
-- Agent can escalate exceptions to humans when needed
-- Input/output can form fast validation loops
+## Key learning #1: when the rubric tells you something you know is false, the rubric is the broken part
 
-### The Evaluation Methodology
+I use coding agents every day. So does most of the industry. Whatever list you want to argue about, this one is real, it's in production, it's spending actual money, and by some telemetry it's close to half of all agent tool calls. A rubric that puts it in the bottom third, below procurement negotiation, is not describing the world.
 
-Each use case is evaluated against all 17 attributes using a simple three-point scale:
+So I went back and asked what the rubric was actually measuring. Here's what it was rewarding:
 
-- **True (1):** The use case strongly possesses this attribute. The agent will have clear advantage here.
-- **Somewhat (0):** The use case partially or ambiguously has this attribute. Mixed performance expected.
-- **False (-1):** The use case lacks this attribute. This will be a challenge area requiring workarounds.
+- Bounded solution spaces
+- Few turns of new input
+- Immediate, automatic verification
+- Exact policies and prescriptive rules
 
-Each score is then **multiplied by its tier's weight** (1-6x). A use case scoring "True" on a Tier 1 attribute (Cognitive Complexity) gets +6 points. Scoring "False" on the same attribute gets -6 points. Tier 5 attributes (Support & Safety) only multiply by ×1, reflecting that while important, they're table-stakes rather than differentiators.
+And here's what writing software is:
 
-This creates a **weighted total score** that reflects both the breadth of attributes and their relative strategic importance. A use case with high cognitive complexity demands (Tier 1) but clear bounded processes (Tier 4) will score very differently than one with simple operations but complex interdependencies.
+- An unbounded solution space. There are a million ways to write the function.
+- Many iterative loops. You write, you run, you read the error, you try again.
+- Verification that's real but slow and partial. Tests catch some of it. Not all of it.
+- Requirements that arrive vague and get clarified by building.
 
-## The Findings: How Rankings Diverged
+Every single thing that makes software engineering a *good* agent task, my rubric was scoring as a defect. It wasn't measuring agent suitability at all. It was measuring resemblance to a business process automation project circa 2015. Of course customer support won. I'd built a rubric that could only ever pick customer support.
 
-Under Pass 1 (Operational Efficiency):
-1. Customer support resolution - 16
-2. HR service desk - 14
-3. IT service desk - 9
+## Pass 3: rebuilding around the thing I got wrong
 
-Under Pass 3 (Cognitive Complexity):
-1. IT service desk and incident response - 52
-2. Software engineering agents - 51
-3. Fraud, AML, and real-time risk - 41
+The fix wasn't to nudge software engineering up a few points. It was to admit I'd encoded one philosophy, "what high-volume repetitive process can we automate," and pretend it was neutral. So I built the opposite rubric on purpose and ran the same 17 use cases through it.
 
-The same use case (IT service desk) improved from 9 to 52 points. Customer support—the supposed "obvious" choice—dropped from near the top to mid-tier.
+The second rubric asks a different question: "what intellectually demanding problem can we put an agent on alongside a human expert?" Seventeen attributes, five tiers.
 
-This matters because it reveals what each framework actually values.
+**Tier 1, Cognitive Complexity (×6).** Can the agent decompose an ambiguous problem? Is the solution space open enough to need exploration? Can it improve through iteration and test feedback? Are there multiple valid paths with trade-offs to weigh?
 
-## The Pros: Why This Rubric Works
+**Tier 2, Tool Integration and Coordination (×5).** Can it drive multiple tools and APIs? Coordinate sub-agents? Hold context across a long multi-turn session? Are results reviewable through logs and test suites?
 
-**1. Explains real-world variance.** Why does customer support succeed easily at scale while fraud detection struggles? The rubric shows it's because support uses bounded logic with high repetition, while fraud requires unbounded exploration and complex pattern matching. Organizations can now predict which challenges to expect.
+**Tier 3, Execution Excellence (×3).** Repeatable patterns, partial self-verification, fast feedback loops.
 
-**2. De-hypes vendor marketing.** Much online consensus is driven by companies selling tools for customer support and sales automation. This framework makes that marketing bias visible and quantifiable.
+**Tier 4, Process Clarity (×2).** Clear resolution paths, bounded rules, constrained solutions.
 
-**3. Enables strategic alignment.** Organizations can now ask: "Do we want cost reduction (Pass 1) or capability expansion (Pass 3)?" instead of defaulting to whatever's trendy. The framework accommodates both.
+**Tier 5, Support and Safety (×1).** Operator memory management, human escalation, fast validation loops. Important, but table stakes, not differentiators.
 
-**4. Identifies underrated opportunities.** Security operations and fraud detection score remarkably high under cognitive complexity weighting, yet they're discussed mainly in niche vendor circles. This suggests genuine competitive advantages for early movers.
+Same three-point scale. Same arithmetic. New ranking:
 
-**5. Provides implementation guardrails.** Each tier specifies what the use case actually requires (tool integration, iterative feedback loops, memory management). Organizations stop guessing and start building to spec.
+| Use case | Score |
+| --- | --- |
+| IT service desk and incident response | 52 |
+| Software engineering agents | 51 |
+| Sales development and lead qualification | 43 |
+| Fraud, AML, and real-time risk | 42 |
+| Security operations | 40 |
+| Marketing campaign optimization | 38 |
+| Customer support resolution | 33 |
+| Finance operations | 33 |
 
-## The Cons: Limitations and Blind Spots
+Software engineering went from 1 to 51, twelfth place to second. Customer support fell from the top to mid-pack. IT service desk stayed at the top of both, which is the most interesting result in the whole exercise, and I'll come back to it.
 
-**1. Weighting is subjective.** Why is "Agent can decompose complex problems" worth 6x points while "Agent can escalate to humans" is worth 1x? The framework makes these trade-offs explicit, but different organizations may legitimately weight them differently.
+One caveat before anyone quotes those numbers at me: the two passes are not on the same scale. Different attributes, different multipliers, different maximums. "Customer support went from 29 to 33" doesn't mean it improved. The only thing you can legitimately compare across passes is the *ordering*, and the ordering moved a lot.
 
-**2. The tiers oversimplify.** Real-world use cases exist in messy combinations. A use case might have unbounded problem complexity (Tier 1 strength) but bounded data availability (Tier 4 challenge). The framework captures this, but it requires careful evaluation.
+## Key learning #2: the ranking is a picture of your weighting, not of reality
 
-**3. No consideration of domain-specific barriers.** A healthcare use case might score well on cognitive complexity but face regulatory barriers that make implementation nearly impossible. The rubric doesn't account for compliance, legal, or industry-specific constraints beyond "Regulatory Compliance" as a basic attribute.
+This is the part I'd want someone to take away.
 
-**4. Nascent technology risk.** A use case might score high on the rubric but still fail if the underlying technology (LLMs, tool use, memory systems) isn't mature enough. The framework can't predict technical progress.
+I built two rubrics. Both are defensible. Both are internally consistent. Neither one has a bug in it. And they produce nearly opposite recommendations about where to start.
 
-**5. Team capability isn't weighted.** A simple use case with an expert team often outperforms a complex use case with mediocre talent. The rubric focuses on use case characteristics, not organizational readiness.
+That means every ranked list of agentic AI use cases you've ever read, including both of mine, is mostly a readout of what the author decided to weight. When a vendor tells you customer support is the obvious first use case, they are not lying. They're telling you their weighting, and their weighting is speed to deployment and volume of tickets. That's a completely reasonable thing to optimize for. It's just not the same as "this is the highest-value place to put an agent," and the two get conflated constantly.
 
-## What's Novel Here
+So the useful question isn't "what's the best agentic AI use case." It's "which of these two rubrics describes what my company is actually trying to buy?" If you need a number on the board in two quarters, Pass 1 is your rubric and customer support really is your answer. If you're trying to build something a competitor can't copy in a quarter, Pass 3 is your rubric and the answer looks like security operations or engineering tooling.
 
-Most agentic AI evaluation frameworks focus on ROI, timeline, or technical feasibility. This one goes deeper:
+Pick your weighting first. The ranking is downstream of it.
 
-- **It separates cost-cutting from capability-building.** Most frameworks conflate them, leading to organizations optimizing for the wrong goal.
-- **It quantifies the "unbounded solution space" problem.** This is why software engineering agents are so interesting but difficult—they require agents to explore creative possibilities, which is cognitively expensive.
-- **It values tool integration as a first-class concern.** The ability to coordinate across APIs and sub-agents is separated out, recognizing that integration complexity is different from task complexity.
-- **It surfaces the "iterative learning" advantage.** Fraud detection and security ops improve as agents learn patterns. Customer support doesn't. The framework captures this distinction.
+## Key learning #3: look for the use cases that win under both
 
-## The Current Consensus vs. This Analysis
+IT service desk and incident response came out first under the cognitive complexity rubric and near the top under operational efficiency. It's the only use case that does well no matter which philosophy you apply.
 
-**Internet consensus:** Customer support (1), Software engineering (hyped but unclear where it ranks), Sales development (heavily marketed), IT service desk (acknowledged but not top)
+Once you see it, it makes sense. A password reset is bounded, repeatable, high-volume, and instantly verifiable. That's the Pass 1 profile exactly. A production incident at 2am is unbounded investigation across logs, metrics, and recent commits, with several plausible root causes to weigh. That's the Pass 3 profile exactly. Same team, same tools, same ticket queue, both shapes of work.
 
-**This analysis:** IT service desk (1), Software engineering (2), Fraud/AML (3), Security ops (4)
+Fraud and AML have a similar dual character and score respectably in both. So does finance ops, though for narrower reasons.
 
-The consensus nails one thing: software engineering agents are genuinely complex and valuable. But it wildly overrates customer support as the "obvious" first use case and underestimates security and fraud work.
+If I were spending someone's budget, I'd start there. A use case that only wins under one weighting is a bet on that weighting being right. A use case that wins under both is a bet on the domain, and you get to be wrong about your strategy without being wrong about your project.
 
-Why? Vendor presence. Customer support has more vendors, more case studies, more marketing budget. Fraud detection has excellent results but fewer public case studies. The internet's rankings reflect marketing spend, not actual difficulty or value.
+## Where this thing breaks
 
-## Next Steps: Making This Actionable
+I want to be honest about the limits, because it's a spreadsheet and an afternoon, not a research paper.
 
-**For organizations pursuing quick wins:** Use Pass 1 logic. Target customer support, sales development, IT ticket routing. Expect 6-12 month ROI, clear success metrics, straightforward implementation.
+The weights are my judgment. I decided problem decomposition is worth 6x and human escalation is worth 1x. Someone who's been burned by an agent that couldn't hand off cleanly would weight that differently and get a different answer, and I couldn't prove them wrong.
 
-**For organizations seeking competitive advantage:** Use Pass 3 logic. Consider security operations, fraud detection, software engineering. Expect 12-24 month horizon, harder success metrics, but potentially defensible capabilities.
+There's no regulatory or compliance dimension in the second rubric. Healthcare admin scores 25 on cognitive complexity, which is fine, and says nothing about whether you can actually ship it inside a HIPAA boundary in a reasonable timeframe. Same problem for anything in financial services. That's a real gap and it's the first thing I'd add.
 
-**For the industry:** Develop Pass 4 and Pass 5. This framework is a starting point. Add regulatory burden scoring, team capability assessment, technology maturity requirements. Build better decision trees.
+It scores the use case, not your team. A boring use case with three people who've shipped agents before beats an exciting one with a team that hasn't, every time, and none of that shows up in the arithmetic.
 
-**For vendors:** Stop pretending all use cases are equally valuable. Help customers map their use case to the rubric, then provide solutions specifically designed for that complexity tier. The market needs tier-specific tooling, not one-size-fits-all platforms.
+And it can't see technology maturity. A use case can score well and still fail because the memory systems or the tool-calling reliability aren't there yet. The rubric assumes today's capabilities are fixed. They very much aren't.
 
-**For researchers:** Test this framework against real implementations. Do organizations that match their use case to the right weighting philosophy actually achieve better outcomes? Track these correlations.
+One more, on my own analysis. When I went back to check the arithmetic, 21 of the 51 scored rows had totals that didn't match what their columns actually summed to. All of it was small, a point or two per row, and the corrected numbers are what you see above. It didn't change either headline: customer support still wins the first rubric, IT service desk and software engineering still take the top two spots in the second.
 
-## The Bigger Picture
+It did move things in the middle, though. Finance ops passed IT service desk in the first pass. Software engineering came off the negative side of the ledger entirely. If I'd been trying to split a decision between two adjacent use cases, hand arithmetic would have decided it for me, and I'd never have known. Keep this in a spreadsheet with real formulas, or check the sums with six lines of Python. Don't hand-maintain a 17-by-17 grid of integers in Markdown, which is a lesson I apparently need to relearn every few years.
 
-The agentic AI space is at an inflection point. The low-hanging fruit (customer support, simple automation) gets built easily but doesn't create moats. The hard stuff (security, software engineering, complex problem-solving) creates lasting value but requires different architecture, different team skills, and different evaluation criteria.
+## Try it on your own list
 
-This framework doesn't pick a winner. It illuminates the trade-offs and helps you pick the right one for your organization.
+The whole thing costs an afternoon and whatever you value your own time at, which makes it roughly the cheapest planning artifact you'll build this quarter.
 
-The question isn't "What's the best use case for agentic AI?" It's "What kind of value creation matters most to us—and what framework should we use to get there?"
+Take the 17 attributes, take whatever use cases are actually on your roadmap, and score them twice. Once weighted for speed to value, once weighted for capability depth. If a use case wins both, start there. If the two rankings disagree violently, you've learned something more useful than a score: your team hasn't agreed yet on what you're optimizing for, and you found out in a spreadsheet instead of in month nine of a build.
+
+The attribute lists, both weighting schemes, and the full scored tables are in the repo. Take them, change my weights, and tell me what you get. I'd genuinely like to know which ones I have wrong.
