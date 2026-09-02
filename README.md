@@ -77,4 +77,4 @@ python3 verify_scores.py --fix    # rewrite any total that disagrees with its co
 2. **MacBook Air (M1)**
 3. **VS Code**
 4. **Claude Opus 5**
-5. **pandoc + headless Chrome** — how the PDF gets built from the Markdown
+5. **GitHub Copilot**
