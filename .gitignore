@@ -16,3 +16,6 @@ venv/
 .vscode/
 .idea/
 *.swp
+
+# Archived drafts and working notes (kept locally, not published)
+archive/
