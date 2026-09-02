@@ -3,7 +3,7 @@
 ## Alternative Weighting System to Prioritize Software Engineering Agents
 
 ### Current Problem
-Software engineering agents score -1 under the current weighting because it prioritizes:
+Software engineering agents score 1 under the current weighting — 12th of 17, against 29 for customer support — because that weighting prioritizes:
 - High-volume, structured, decision-making tasks
 - Bounded, repeatable processes with clear resolution paths
 - Fast, verifiable solutions
@@ -49,8 +49,8 @@ The question becomes: *Do you prioritize simple operational efficiency optimizat
 
 ### Impact on Use Case Rankings
 Under this new weighting system:
-1. Software engineering agents would rise from -1 to potentially 25-35+
-2. Customer support resolution would drop from 30 to ~20-25
+1. Software engineering agents would rise from 1 (12th) to potentially 25-35+
+2. Customer support resolution would drop from 29 (1st) to ~20-25
 3. Legal contracts, Healthcare admin would gain points (complex problem-solving valued)
 4. Finance operations, IT service desk would remain competitive but not dominant
 
