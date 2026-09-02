@@ -1,3 +1,5 @@
+# Agentic AI Most Cited Use Cases
+
 1. Customer support resolution
 The single most recycled enterprise example. Agent reads a ticket, looks up CRM/order/policy data, refunds or resets, drafts or sends the reply, escalates only exceptions. Klarna, Intercom Fin, Zendesk, Gartner’s “80% of common issues by 2029” line, and almost every use-case roundup lead with this.
 
