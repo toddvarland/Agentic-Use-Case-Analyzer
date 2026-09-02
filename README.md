@@ -11,7 +11,7 @@ published "top use cases" list is mostly a readout of whoever chose the weights.
 
 | File | What it is |
 | --- | --- |
-| [Agentic AI Most Cited Use Cases.md](Agentic%20AI%20Most%20Cited%20Use%20Cases.md) | The 20 use cases pulled from the usual roundups, with the vendors and stats each one is usually cited with. 17 were carried forward as distinct enough to score. |
+| [Most Cited Use Cases - Agentic AI.md](Most%20Cited%20Use%20Cases%20-%20Agentic%20AI.md) | The 20 use cases pulled from the usual roundups, with the vendors and stats each one is usually cited with. 17 were carried forward as distinct enough to score. |
 | [Use Case Attributes.md](Use%20Case%20Attributes.md) | The raw attribute list — what makes a task agent-friendly, before any weighting. |
 | [Use Case Attributes Weighted for Operational Efficiency.md](Use%20Case%20Attributes%20Weighted%20for%20Operational%20Efficiency.md) | The ×3 / ×2 / ×1 scheme, built for speed to deployment and measurable cost reduction. |
 | [Use Case Analysis Pass 1.md](Use%20Case%20Analysis%20Pass%201.md) | Scored grid under the operational efficiency weighting. This is the post's "the answer I expected" table. |
@@ -24,7 +24,7 @@ published "top use cases" list is mostly a readout of whoever chose the weights.
 Two counts look inconsistent at first glance, so both are worth stating plainly.
 
 **20 use cases cited, 17 scored.** Three from
-[Agentic AI Most Cited Use Cases.md](Agentic%20AI%20Most%20Cited%20Use%20Cases.md) were
+[Most Cited Use Cases - Agentic AI.md](Most%20Cited%20Use%20Cases%20-%20Agentic%20AI.md) were
 dropped as too overlapping or too thin to score separately: data-analyst agents,
 insurance claims and underwriting, and scientific / drug-discovery research loops.
 
